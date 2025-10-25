@@ -28,7 +28,13 @@ ifeq ($(UNAME_S),Darwin)
     endif
 else
     WAMR_BUILD_PLATFORM = linux
-    WAMR_BUILD_TARGET = X86_64
+    ifeq ($(UNAME_M),x86_64)
+        WAMR_BUILD_TARGET = X86_64
+    else ifeq ($(UNAME_M),aarch64)
+        WAMR_BUILD_TARGET = AARCH64
+    else
+        WAMR_BUILD_TARGET = ARM
+    endif
 endif
 
 wamr: $(WAMR_DIR)/lib/libvmlib.a
